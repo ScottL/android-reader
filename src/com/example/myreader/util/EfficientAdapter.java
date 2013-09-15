@@ -44,6 +44,9 @@ public class EfficientAdapter extends ArrayAdapter<Article> {
 	    View rowView = inflater.inflate(R.layout.article_row, parent, false);
 	    TextView textView = (TextView) rowView.findViewById(R.id.title);
 	    textView.setText(articles.get(position).getTitle());
+	    if((articles.get(position).getRead())){
+	    	textView.setBackgroundColor(Color.WHITE);
+	    }
 
 		return rowView;
 	} 

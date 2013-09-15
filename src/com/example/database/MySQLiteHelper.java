@@ -3,14 +3,13 @@ package com.example.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
 	
-	public static final String TABLE_NAME = "entry";
-    public static final String COLUMN_NAME_ENTRY_ID = "entryid";
-    public static final String COLUMN_NAME_TITLE = "title";
-    public static final String COLUMN_NAME_SUBTITLE = "subtitle";
-    public static final String KEY_ID = "entryid";
+	public static final String TABLE_NAME = "entry";    
+    public static final String KEY_ROWID = BaseColumns._ID;
+    public static final String KEY_GUID = "guid";
 	public static final String KEY_READ = "read";
 
 	
@@ -19,7 +18,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public static final int DATABASE_VERSION = 1;
 	private static final String SQL_CREATE_ENTRIES = 
 				"CREATE TABLE " + TABLE_NAME + "(" + 
-				KEY_ID + " integer primary key autoincrement, " + 
+				KEY_ROWID + " integer primary key autoincrement, " + 
+				KEY_GUID + " text not null, " + 
 	    		KEY_READ + " boolean not null" +
 	    		");";
 	private static final String SQL_DELETE_ENTRIES =

@@ -15,6 +15,7 @@ import org.xml.sax.XMLReader;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.database.ArticleDbAdaptor;
 import com.example.myreader.Menu;
 import com.example.myreader.data.Article;
 
@@ -33,9 +34,34 @@ public class RssService extends AsyncTask<String, Void, List<Article>>{
 		menu.ShowProgress.show();
 	}
 	
-	protected void onPostExecute(List<Article> articles) {
+	protected void onPostExecute(final List<Article> articles) {
 		Log.e("RssService", "POST EXECUTE");
-		menu.setRSSResult(articles);
+		
+		menu.runOnUiThread(new Runnable(){
+		    public void run() {
+		    	for (Article a : articles){
+					//Log.e("DB", "Searching DB for GUID: " + a.getGuid());
+					ArticleDbAdaptor dba = new ArticleDbAdaptor(menu.getApplicationContext());
+		            dba.openToRead();
+		            Article fetchedArticle = dba.getBlogListing(a.getGuid());
+		            dba.close();
+					if (fetchedArticle == null){
+						Log.e("DB", "Found entry for first time: " + a.getTitle());
+						dba = new ArticleDbAdaptor(menu.getApplicationContext());
+			            dba.openToWrite();
+			            dba.insertBlogListing(a.getGuid());
+			            dba.close();
+					}else{
+						a.setDbId(fetchedArticle.getDbId());
+						a.setRead(fetchedArticle.getRead());
+					}
+				}
+		    	
+		    	menu.setRSSResult(articles);
+		    }
+		 });
+		
+		
 		menu.ShowProgress.dismiss();
 	}
 	
@@ -60,7 +86,6 @@ public class RssService extends AsyncTask<String, Void, List<Article>>{
 				xr.parse(new InputSource(url.openStream()));
 			}
 			
-			//xr.parse(new InputSource(url.openStream()));
 
 			Log.e("RssService", "PARSING FINISHED");
 			Log.e("RssService", "Article List Size: " + rh.getArticleList().size());	

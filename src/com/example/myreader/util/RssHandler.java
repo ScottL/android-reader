@@ -8,6 +8,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.util.Log;
+
 import com.example.myreader.data.Article;
 
 
@@ -72,6 +74,8 @@ public class RssHandler extends DefaultHandler {
 			currentArticle.setEncodedContent(chars.toString());
 		} else if (localName.equalsIgnoreCase("pubDate")){
 			currentArticle.setPubDate(chars.toString());
+		} else if (localName.equalsIgnoreCase("guid")){
+			currentArticle.setGuid(chars.toString());
 		} else if (localName.equalsIgnoreCase("item")){
 			
 		} 
@@ -81,7 +85,6 @@ public class RssHandler extends DefaultHandler {
 		if (localName.equalsIgnoreCase("item")) {
 
 			articleList.add(currentArticle);
-
 			currentArticle = new Article();
 
 			// Lets check if we've hit our limit on number of articles
@@ -97,7 +100,7 @@ public class RssHandler extends DefaultHandler {
 
 	/* 
 	 * This method is called when characters are found in between XML markers, however, there is no
-	 * guarante that this will be called at the end of the node, or that it will be called only once
+	 * guarantee that this will be called at the end of the node, or that it will be called only once
 	 * , so we just accumulate these and then deal with them in endElement() to be sure we have all the
 	 * text
 	 * 

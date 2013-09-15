@@ -6,16 +6,26 @@ import android.os.Parcelable;
 
 public class Article implements Parcelable  {
 	
+	private String guid;
 	private String title;
 	private String description;
 	private String url;
 	private String encodedContent;
 	private String pubDate;
 	private boolean read;
+	private long dbId;
 	
 	
 	public Article(){
 		
+	}
+	
+	public String getGuid() {
+		return guid;
+	}
+
+	public void setGuid(String guid) {
+		this.guid = guid;
 	}
 	
 	public String getTitle() {
@@ -34,7 +44,6 @@ public class Article implements Parcelable  {
 		this.url = url;
 	}
 
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -50,7 +59,6 @@ public class Article implements Parcelable  {
 	public String getEncodedContent() {
 		return encodedContent;
 	}
-	
 	
 	public void setPubDate(String pubDate) {
 		this.pubDate = pubDate;
@@ -71,12 +79,20 @@ public class Article implements Parcelable  {
 		return data;
 	}
 	
-	public void setIsRead(boolean bool){
+	public void setRead(boolean bool){
 		this.read = bool;
 	}
 	
-	public boolean isRead(){
+	public boolean getRead(){
 		return read;
+	}
+	
+	public long getDbId() {
+		return dbId;
+	}
+
+	public void setDbId(long dbId) {
+		this.dbId = dbId;
 	}
 
 

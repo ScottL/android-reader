@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.database.ArticleDbAdaptor;
 import com.example.myreader.data.Article;
 import com.example.myreader.util.CategoryAdaptor;
 import com.example.myreader.util.EfficientAdapter;
@@ -37,6 +38,8 @@ public class Menu extends ListActivity {
 	private ListView mDrawerList;
 	private DrawerLayout mDrawerLayout;
 	private String[] categoryList = CategoryListActivity.CATEGORY_LIST;
+	private ArticleDbAdaptor mArticleDb;
+	private EfficientAdapter articleListAdaptor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +48,15 @@ public class Menu extends ListActivity {
 		
 		Intent intent = getIntent();
 		categoryName = intent.getStringExtra(CategoryListActivity.CATEGORY_NAME);
-
+		mArticleDb = new ArticleDbAdaptor(this);
+		
 		ShowProgress = new ProgressDialog(Menu.this);
 		ShowProgress.setMessage("Loading...");
 		
 		setupDrawerList();
 		setupActionBar();
 		setupRSSService();
-     
+    
 		
 		/*	http://news.yahoo.com/rss/us
 		 *	http://news.yahoo.com/rss/
@@ -91,9 +95,10 @@ public class Menu extends ListActivity {
 	}
 	
 	public void setRSSResult(List<Article>  articles){
-		EfficientAdapter articleListAdaptor = new EfficientAdapter(this, android.R.layout.simple_list_item_1, articles);
+		articleListAdaptor = new EfficientAdapter(this, android.R.layout.simple_list_item_1, articles);
 		setListAdapter(articleListAdaptor);
 		this.articles = articles;
+		articleListAdaptor.notifyDataSetChanged();
 	}
 	
 	
@@ -103,23 +108,17 @@ public class Menu extends ListActivity {
 		Log.e("MENU CLICK", articles.get(position).getUrl());
 	
 		Article currArticle = articles.get(position);	
+		
+		mArticleDb.openToWrite();
+		mArticleDb.markAsRead(currArticle.getGuid());
+		mArticleDb.close();
+		currArticle.setRead(true);
+		
+		
 		Intent intent = new Intent(this, DetailActivity.class);
 		intent.putExtra(ARTICLE_OBJECT, currArticle);
 		startActivity(intent);    
 		
-		//currArticle.setIsRead(true);
-		//EfficientAdapter temp = (EfficientAdapter) getListAdapter();
-		//temp.notifyDataSetChanged();
-		
-		
-		/*
-		Toast.makeText(getApplicationContext(),
-			      "Click ListItem Number " + position, Toast.LENGTH_LONG)
-			      .show();
-		Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri
-				.parse(articles.get(position).getUrl()));
-		startActivity(intent);
-		*/
 	}
 	
 	
@@ -146,5 +145,15 @@ public class Menu extends ListActivity {
 			mDrawerLayout.closeDrawer(mDrawerList);
 	    }
 	}
+	
+	@Override
+	public void onStart() {
+	    super.onStart();
+
+	    if (articleListAdaptor != null) {
+	    	articleListAdaptor.notifyDataSetChanged();
+	    }
+	}
+	
 	
 }
