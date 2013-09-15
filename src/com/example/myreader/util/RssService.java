@@ -52,6 +52,7 @@ public class RssService extends AsyncTask<String, Void, List<Article>>{
 			            dba.insertBlogListing(a.getGuid());
 			            dba.close();
 					}else{
+						//Log.e("DB", "Entry already exists: " + fetchedArticle.getDbId());
 						a.setDbId(fetchedArticle.getDbId());
 						a.setRead(fetchedArticle.getRead());
 					}
@@ -60,8 +61,7 @@ public class RssService extends AsyncTask<String, Void, List<Article>>{
 		    	menu.setRSSResult(articles);
 		    }
 		 });
-		
-		
+				
 		menu.ShowProgress.dismiss();
 	}
 	

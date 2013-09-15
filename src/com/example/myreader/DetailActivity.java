@@ -73,7 +73,7 @@ public class DetailActivity extends Activity   {
 	
 	private void setupHTMLService(){
 		HtmlService service = new HtmlService(this, article);
-		service.execute(article.getUrl());
+		//service.execute(article.getUrl());
 	}
 	
 	private void setupArticleProperties(){

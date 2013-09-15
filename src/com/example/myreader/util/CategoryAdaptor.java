@@ -30,7 +30,7 @@ public class CategoryAdaptor extends ArrayAdapter<String>  {
 	    View rowView = inflater.inflate(R.layout.category_row, parent, false);
 	    TextView textView = (TextView) rowView.findViewById(R.id.category_name);
 	    textView.setText(names[position]);
-	    textView.setBackgroundColor(Color.parseColor(COLORS[position % 10]));
+	    textView.setTextColor(Color.parseColor(COLORS[position % 10]));
 	    textView.getBackground().setAlpha(190);
 		
 		return rowView;
