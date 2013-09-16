@@ -14,8 +14,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.example.myreader.data.Article;
-import com.example.myreader.util.HtmlService;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -27,7 +25,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.text.Spannable;
@@ -36,7 +33,6 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -72,7 +68,7 @@ public class DetailActivity extends Activity   {
 	}
 	
 	private void setupHTMLService(){
-		HtmlService service = new HtmlService(this, article);
+		//HtmlService service = new HtmlService(this, article);
 		//service.execute(article.getUrl());
 	}
 	

@@ -31,15 +31,15 @@ public class Menu extends ListActivity {
 	public final static String DESCRIPTION = "com.example.MyReader.ARTICLE_DESCRIPTION";
 	public final static String ARTICLE_OBJECT = "com.example.MyReader.ARTICLE_OBJECT";
 
+	private String[] categoryList = CategoryListActivity.CATEGORY_LIST;
 	private List<Article> articles = new ArrayList<Article>();
 	public ProgressDialog ShowProgress;
 	private String categoryName;
 
 	private ListView mDrawerList;
 	private DrawerLayout mDrawerLayout;
-	private String[] categoryList = CategoryListActivity.CATEGORY_LIST;
 	private ArticleDbAdaptor mArticleDb;
-	private EfficientAdapter articleListAdaptor;
+	private EfficientAdapter mArticleListAdaptor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,10 +95,10 @@ public class Menu extends ListActivity {
 	}
 	
 	public void setRSSResult(List<Article>  articles){
-		articleListAdaptor = new EfficientAdapter(this, android.R.layout.simple_list_item_1, articles);
-		setListAdapter(articleListAdaptor);
+		mArticleListAdaptor = new EfficientAdapter(this, android.R.layout.simple_list_item_1, articles);
+		setListAdapter(mArticleListAdaptor);
 		this.articles = articles;
-		articleListAdaptor.notifyDataSetChanged();
+		mArticleListAdaptor.notifyDataSetChanged();
 	}
 	
 	
@@ -138,7 +138,7 @@ public class Menu extends ListActivity {
 	
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 	    @Override
-	    public void onItemClick(AdapterView parent, View v, int position, long id) { 
+	    public void onItemClick(AdapterView<?> parent, View v, int position, long id) { 
 	    	if(!categoryList[position].equals(categoryName)){
 	    		onCategoryChange(categoryList[position]);
 	    	}
@@ -150,8 +150,8 @@ public class Menu extends ListActivity {
 	public void onStart() {
 	    super.onStart();
 
-	    if (articleListAdaptor != null) {
-	    	articleListAdaptor.notifyDataSetChanged();
+	    if (mArticleListAdaptor != null) {
+	    	mArticleListAdaptor.notifyDataSetChanged();
 	    }
 	}
 	

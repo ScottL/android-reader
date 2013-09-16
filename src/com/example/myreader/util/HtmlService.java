@@ -5,12 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.myreader.DetailActivity;
-import com.example.myreader.Menu;
 import com.example.myreader.data.Article;
 
 

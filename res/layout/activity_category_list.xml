@@ -7,7 +7,7 @@
    >
 
 
-	<ListView 
+	<ExpandableListView  
 	    android:id="@android:id/list"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
@@ -17,8 +17,9 @@
 	   	android:paddingLeft="10dp"
 	   	android:paddingRight="10dp"
 	    android:scrollbarStyle="outsideOverlay"
-	    android:divider="@android:color/transparent"
-	    android:dividerHeight="15dp"
+	    android:divider="#000000"
+	    android:dividerHeight="1dp"
+	    android:childDivider="#000000"
 	     >
 	<!--  For spacing between list items
 			android:divider="@android:color/transparent"
@@ -26,6 +27,6 @@
 	    	
 	    	 android:background="@drawable/jbwallpaper"
 			 -->
-	</ListView>
+	</ExpandableListView >
 	
 </LinearLayout>

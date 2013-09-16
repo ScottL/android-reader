@@ -6,7 +6,7 @@
    >
     
     
-	<TextView android:id="@+id/category_name"
+	<TextView android:id="@+id/subcategory_name"
 	    android:layout_width="match_parent" 
 		android:layout_height="wrap_content"
 		android:maxHeight="50dp"
@@ -19,8 +19,7 @@
         android:paddingRight="10dp"
         android:paddingLeft="30dp"
         android:textSize="20sp"
-        android:textColor="#FFFFFFFF"
-        android:textStyle="bold"
+        android:textColor="#000000"
         android:background="#ABE6E6E6"
         android:textIsSelectable="false"
          >
