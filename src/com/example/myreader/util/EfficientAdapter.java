@@ -1,9 +1,14 @@
 package com.example.myreader.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +22,14 @@ import com.example.myreader.data.Article;
 public class EfficientAdapter extends ArrayAdapter<Article> {
 	
 	 //HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-	  private final Context context;
-	  private final List<Article> articles;
+	  private final Context mContext;
+	  private final List<Article> mArticles;
 
 	public EfficientAdapter(Context context, int textViewResourceId,
 			List<Article> objects) {
 		super(context, textViewResourceId, objects);
-		this.context = context;
-		this.articles = objects;
+		this.mContext = context;
+		this.mArticles = objects;
 	}
 	
 	/*
@@ -39,14 +44,25 @@ public class EfficientAdapter extends ArrayAdapter<Article> {
 	
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    View rowView = inflater.inflate(R.layout.article_row, parent, false);
-	    TextView textView = (TextView) rowView.findViewById(R.id.title);
-	    textView.setText(articles.get(position).getTitle());
-	    if((articles.get(position).getRead())){
-	    	textView.setBackgroundColor(Color.parseColor("#A0000011"));
+
+	    TextView titleText = (TextView) rowView.findViewById(R.id.article_title);
+	    titleText.setText(mArticles.get(position).getTitle());
+	    if((mArticles.get(position).getRead())){
+	    	rowView.setBackgroundColor(Color.parseColor("#A0000011"));
 	    }
 
+	    SimpleDateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss Z", Locale.ENGLISH);
+ 	   	Date date;
+		try {
+			date = df.parse(mArticles.get(position).getPubDate());
+			TextView dateText = (TextView) rowView.findViewById(R.id.article_date);
+		 	dateText.setText(DateUtil.getDateDifference(date));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	    
 		return rowView;
 	} 
 	

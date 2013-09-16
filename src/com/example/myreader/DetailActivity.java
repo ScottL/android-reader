@@ -31,11 +31,14 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.myreader.util.DateUtil;
 
 public class DetailActivity extends Activity   {
 	
@@ -86,15 +89,21 @@ public class DetailActivity extends Activity   {
 	    
 	    
 	    /* DATE */
-	    SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
-	    String returndate;
+	   //SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+	   //String returndate;
 	    try {
-	    	Date date = formatter.parse(articlePubDate);
-	    	Calendar c = Calendar.getInstance();
-	        c.setTime(date);
-	        returndate=""+c.get(Calendar.DAY_OF_MONTH)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR)+" "+c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE);
-	        TextView dateText = (TextView) findViewById(R.id.article_date);
-	 	    dateText.setText(returndate);
+	    	//Date date = formatter.parse(articlePubDate);
+	    	//Calendar c = Calendar.getInstance();
+	        //c.setTime(date);
+	        //returndate=""+c.get(Calendar.DAY_OF_MONTH)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR)+" "+c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE);
+	        //TextView dateText = (TextView) findViewById(R.id.article_date);
+	 	    //dateText.setText(returndate);
+	 	    
+	 	   SimpleDateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss Z", Locale.ENGLISH);
+	 	   Date date = df.parse(articlePubDate);
+	 	   TextView dateText = (TextView) findViewById(R.id.article_date);
+	 	   dateText.setText(DateUtil.getDateDifference(date));
+	 	    
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

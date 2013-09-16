@@ -55,18 +55,23 @@ public class CategoryListActivity extends ExpandableListActivity{
         	mGroupName.add(CATEGORY_LIST[i]);
         }
  
-        List<String> TopStories = new ArrayList<String>();
-        TopStories.add("Yahoo");
-        TopStories.add("TechCrunch");
-        TopStories.add("Google");
+
+        List<String> Technology = new ArrayList<String>();
+        Technology.add("TechCrunch");
+        List<String> Business = new ArrayList<String>();
+        Business.add("Yahoo");
+        List<String> World = new ArrayList<String>();
+        World.add("Google");
+        
+        
         
         List<String> Empty = new ArrayList<String>(0);
  
 
-        mChildData.put(mGroupName.get(0), TopStories);
-        mChildData.put(mGroupName.get(1), Empty);
-        mChildData.put(mGroupName.get(2), Empty);
-        mChildData.put(mGroupName.get(3), Empty);
+        mChildData.put(mGroupName.get(0), Empty);
+        mChildData.put(mGroupName.get(1), Technology);
+        mChildData.put(mGroupName.get(2), Business);
+        mChildData.put(mGroupName.get(3), World);
         mChildData.put(mGroupName.get(4), Empty);
         mChildData.put(mGroupName.get(5), Empty);
         mChildData.put(mGroupName.get(6), Empty);

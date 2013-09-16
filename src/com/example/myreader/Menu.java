@@ -75,15 +75,18 @@ public class Menu extends ListActivity {
 	private void setupRSSService(){
 		RssService service = new RssService(this);
 		if(categoryName.equals("Top Stories")){
-			String[] feeds = {"http://news.yahoo.com/rss/us"};
+			String[] feeds = {"http://news.yahoo.com/rss/us", "http://feeds.feedburner.com/TechCrunch"};
 			service.execute(feeds);
 		}else if(categoryName.equals("Technology")){
 			String[] feeds = {"http://feeds.feedburner.com/TechCrunch"};
 			service.execute(feeds);
+		}else if(categoryName.equals("Business")){
+			String[] feeds = {"http://news.yahoo.com/rss/us"};
+			service.execute(feeds);
 		}else{
 			String[] feeds = {"http://news.google.com/news?pz=1&cf=all&ned=us&hl=en&output=rss"};
 			service.execute(feeds);
-		}		
+		}
 	}
 	
 	private void setupDrawerList(){
@@ -147,9 +150,8 @@ public class Menu extends ListActivity {
 	}
 	
 	@Override
-	public void onStart() {
-	    super.onStart();
-
+	public void onResume() {
+	    super.onResume();
 	    if (mArticleListAdaptor != null) {
 	    	mArticleListAdaptor.notifyDataSetChanged();
 	    }

@@ -3,26 +3,36 @@
    android:layout_width="match_parent"
    android:layout_height="match_parent"
    android:orientation="vertical" 
+   android:padding="15dp"
+   android:maxHeight="85dp"
+   android:minHeight="85dp"
+   android:background="#CC000000"
+   android:gravity="center_vertical"
    >
-    
-    
-	<TextView android:id="@+id/title"
+
+        
+	<TextView android:id="@+id/article_title"
 	    android:layout_width="match_parent" 
 		android:layout_height="wrap_content"
-		android:maxHeight="85dp"
-		android:minHeight="85dp"
 		android:gravity="center_vertical"
-		
 		android:maxLines="2"
-        android:padding="15dp"
-        
         android:textSize="13sp"
         android:textColor="#CCFFFEEE"
- 		android:background="#CC000000"
         android:textIsSelectable="false"
-         >
-
+        >
 	</TextView>
+	
+	<TextView android:id="@+id/article_date"
+	    android:layout_width="match_parent" 
+		android:layout_height="wrap_content"
+		android:gravity="center_vertical"
+		android:maxLines="1"
+        android:textSize="13sp"
+        android:textColor="#A0A0A0"
+        android:textIsSelectable="false"
+        >
+	</TextView>
+	
 	
 		<!--  android:textColor="#000000"
 		android:layout_marginTop="9dp" 
@@ -38,7 +48,5 @@
 
 		<!--  Margin: outside the box
 			Padding: inside the box -->
-
-	
 		
 </LinearLayout>

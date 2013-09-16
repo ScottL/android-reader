@@ -26,7 +26,6 @@ public class RssService extends AsyncTask<String, Void, List<Article>>{
 	
 	public RssService(Menu menu) {
 		this.menu = menu;
-
 	}
 	
 	protected void onPreExecute() {
@@ -46,7 +45,7 @@ public class RssService extends AsyncTask<String, Void, List<Article>>{
 		            Article fetchedArticle = dba.getBlogListing(a.getGuid());
 		            dba.close();
 					if (fetchedArticle == null){
-						Log.e("DB", "Found entry for first time: " + a.getTitle());
+						Log.e("DB", "Found entry for first time: " + a.getTitle() + ", " + a.getPubDate());
 						dba = new ArticleDbAdaptor(menu.getApplicationContext());
 			            dba.openToWrite();
 			            dba.insertBlogListing(a.getGuid());
@@ -82,6 +81,7 @@ public class RssService extends AsyncTask<String, Void, List<Article>>{
 			xr.setContentHandler(rh);
 			
 			for(int i = 0; i < urls.length; i++){
+				Log.e("RssService", "url:" + urls[i]);
 				url = new URL(urls[i]);
 				xr.parse(new InputSource(url.openStream()));
 			}
