@@ -35,6 +35,7 @@ public class Menu extends ListActivity {
 	private List<Article> articles = new ArrayList<Article>();
 	public ProgressDialog ShowProgress;
 	private String categoryName;
+	private String publisherName;
 
 	private ListView mDrawerList;
 	private DrawerLayout mDrawerLayout;
@@ -48,6 +49,7 @@ public class Menu extends ListActivity {
 		
 		Intent intent = getIntent();
 		categoryName = intent.getStringExtra(CategoryListActivity.CATEGORY_NAME);
+		publisherName = intent.getStringExtra(CategoryListActivity.PUBLISHER_NAME);
 		mArticleDb = new ArticleDbAdaptor(this);
 		
 		ShowProgress = new ProgressDialog(Menu.this);
@@ -78,14 +80,32 @@ public class Menu extends ListActivity {
 			String[] feeds = {"http://news.yahoo.com/rss/us", "http://feeds.feedburner.com/TechCrunch"};
 			service.execute(feeds);
 		}else if(categoryName.equals("Technology")){
-			String[] feeds = {"http://feeds.feedburner.com/TechCrunch"};
-			service.execute(feeds);
-		}else if(categoryName.equals("Business")){
-			String[] feeds = {"http://news.yahoo.com/rss/us"};
-			service.execute(feeds);
-		}else{
-			String[] feeds = {"http://news.google.com/news?pz=1&cf=all&ned=us&hl=en&output=rss"};
-			service.execute(feeds);
+			if(publisherName.equals("TechCrunch")){
+				String[] feeds = {"http://feeds.feedburner.com/TechCrunch"};
+				service.execute(feeds);
+			}else if(publisherName.equals("Engadget")){
+				String[] feeds = {"http://www.engadget.com/rss.xml"};
+				service.execute(feeds);
+			}else if(publisherName.equals("CNET")){
+				String[] feeds = {"http://feeds.feedburner.com/cnet/NnTv"};
+				service.execute(feeds);
+			}
+		}else if(categoryName.equals("U.S. News")){
+			if(publisherName.equals("Yahoo")){
+				String[] feeds = {"http://news.yahoo.com/rss/us"};
+				service.execute(feeds);
+			}else if(publisherName.equals("CNN")){
+				String[] feeds = {"http://rss.cnn.com/rss/cnn_us.rss"};
+				service.execute(feeds);
+			}	
+		}else if(categoryName.equals("World News")){
+			if(publisherName.equals("Google")){
+				String[] feeds = {"http://news.google.com/news?pz=1&cf=all&ned=us&hl=en&output=rss"};
+				service.execute(feeds);
+			}else if(publisherName.equals("New York Times")){
+				String[] feeds = {"http://rss.nytimes.com/services/xml/rss/nyt/World.xml"};
+				service.execute(feeds);
+			}
 		}
 	}
 	

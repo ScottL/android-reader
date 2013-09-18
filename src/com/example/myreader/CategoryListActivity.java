@@ -14,7 +14,8 @@ import android.widget.ExpandableListView;
 public class CategoryListActivity extends ExpandableListActivity{
 
 	public final static String CATEGORY_NAME = "com.example.MyReader.CATEGORY_NAME";
-	public final static String[] CATEGORY_LIST = {"Top Stories", "Technology", "Business", "World News", "U.S. News", "Sports", "Entertainment"};
+	public final static String PUBLISHER_NAME = "com.example.MyReader.PUBLISHER_NAME";
+	public final static String[] CATEGORY_LIST = {"Top Stories", "Technology", "U.S. News", "World News", "Business", "Sports", "Entertainment"};
 	
 	ExpandableCategoryAdaptor mCategoryListAdapter;
     List<String> mGroupName;
@@ -40,6 +41,7 @@ public class CategoryListActivity extends ExpandableListActivity{
 		
 		Intent intent = new Intent(this, Menu.class);
 		intent.putExtra(CATEGORY_NAME, mGroupName.get(groupPosition));
+		intent.putExtra(PUBLISHER_NAME, mChildData.get(mGroupName.get(groupPosition)).get(childPosition));
 		startActivity(intent);    
 		
 		return false;
@@ -58,10 +60,16 @@ public class CategoryListActivity extends ExpandableListActivity{
 
         List<String> Technology = new ArrayList<String>();
         Technology.add("TechCrunch");
-        List<String> Business = new ArrayList<String>();
-        Business.add("Yahoo");
+        Technology.add("Engadget");
+        Technology.add("CNET");
+        
+        List<String> USNews = new ArrayList<String>();
+        USNews.add("Yahoo");
+        USNews.add("CNN");
+        
         List<String> World = new ArrayList<String>();
         World.add("Google");
+        World.add("New York Times");
         
         
         
@@ -70,7 +78,7 @@ public class CategoryListActivity extends ExpandableListActivity{
 
         mChildData.put(mGroupName.get(0), Empty);
         mChildData.put(mGroupName.get(1), Technology);
-        mChildData.put(mGroupName.get(2), Business);
+        mChildData.put(mGroupName.get(2), USNews);
         mChildData.put(mGroupName.get(3), World);
         mChildData.put(mGroupName.get(4), Empty);
         mChildData.put(mGroupName.get(5), Empty);
