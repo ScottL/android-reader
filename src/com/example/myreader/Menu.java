@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
 import com.example.database.ArticleDbAdaptor;
@@ -38,6 +39,7 @@ public class Menu extends ListActivity {
 	private String publisherName;
 
 	private ListView mDrawerList;
+	private ListView mThisListView;
 	private DrawerLayout mDrawerLayout;
 	private ArticleDbAdaptor mArticleDb;
 	private EfficientAdapter mArticleListAdaptor;
@@ -46,6 +48,7 @@ public class Menu extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_article_list);
+		mThisListView = this.getListView();
 		
 		Intent intent = getIntent();
 		categoryName = intent.getStringExtra(CategoryListActivity.CATEGORY_NAME);
@@ -56,6 +59,7 @@ public class Menu extends ListActivity {
 		ShowProgress.setMessage("Loading...");
 		
 		setupDrawerList();
+		setupListeners();
 		setupActionBar();
 		setupRSSService();
     
@@ -124,6 +128,17 @@ public class Menu extends ListActivity {
 		mArticleListAdaptor.notifyDataSetChanged();
 	}
 	
+	private void setupListeners(){
+		mThisListView.setLongClickable(true);	
+		mThisListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View v,
+					int position, long id) {
+				Log.i("Menu", "Long Click");
+				return true;
+			}   
+		});	
+	}
 	
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -145,7 +160,6 @@ public class Menu extends ListActivity {
 	}
 	
 	
-	
 	/** Set up the Action Bar.
 	 * Icon for up navigation is enabled.
 	 * Label is the category name.
@@ -159,6 +173,16 @@ public class Menu extends ListActivity {
 	}
 		
 	
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    if (mArticleListAdaptor != null) {
+	    	mArticleListAdaptor.notifyDataSetChanged();
+	    }
+	}
+	
+	
+	
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 	    @Override
 	    public void onItemClick(AdapterView<?> parent, View v, int position, long id) { 
@@ -168,14 +192,5 @@ public class Menu extends ListActivity {
 			mDrawerLayout.closeDrawer(mDrawerList);
 	    }
 	}
-	
-	@Override
-	public void onResume() {
-	    super.onResume();
-	    if (mArticleListAdaptor != null) {
-	    	mArticleListAdaptor.notifyDataSetChanged();
-	    }
-	}
-	
 	
 }

@@ -18,7 +18,7 @@
         android:paddingBottom="10dp"
         android:paddingRight="10dp"
         android:paddingLeft="30dp"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textColor="#000000"
         android:background="#ABE6E6E6"
         android:textIsSelectable="false"
