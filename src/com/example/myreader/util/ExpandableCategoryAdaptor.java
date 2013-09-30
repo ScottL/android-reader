@@ -29,8 +29,7 @@ public class ExpandableCategoryAdaptor extends BaseExpandableListAdapter {
 	
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		return this.mChildData.get(this.mGroupData.get(groupPosition))
-                .get(childPosition);
+		return this.mChildData.get(this.mGroupData.get(groupPosition)).get(childPosition);
 	}
 
 	@Override
@@ -46,17 +45,14 @@ public class ExpandableCategoryAdaptor extends BaseExpandableListAdapter {
 			convertView = infalInflater.inflate(R.layout.subcategory_row, null);
 		}
 		String childText = (String) getChild(groupPosition, childPosition);
-        TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.subcategory_name);
- 
-        txtListChild.setText(childText);
+        TextView childName = (TextView) convertView.findViewById(R.id.subcategory_name);
+        childName.setText(childText);
         return convertView;
 	}
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		return this.mChildData.get(this.mGroupData.get(groupPosition))
-                .size();
+		return this.mChildData.get(this.mGroupData.get(groupPosition)).size();
 	}
 
 	@Override
@@ -81,11 +77,10 @@ public class ExpandableCategoryAdaptor extends BaseExpandableListAdapter {
 			LayoutInflater infalInflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(R.layout.category_row, null);
 		}
-		TextView lblListHeader = (TextView) convertView
-                .findViewById(R.id.category_name);
-        lblListHeader.setText(mGroupData.get(groupPosition));
-        lblListHeader.setTextColor(Color.parseColor(COLORS[groupPosition % 10]));
-        lblListHeader.getBackground().setAlpha(190);
+		TextView groupName = (TextView) convertView.findViewById(R.id.category_name);
+		groupName.setText(mGroupData.get(groupPosition));
+		groupName.setTextColor(Color.parseColor(COLORS[groupPosition % 10]));
+		groupName.getBackground().setAlpha(190);
         return convertView;
 	}
 

@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
-
 	
 	public static String getDateDifference(Date thenDate){
         Calendar now = Calendar.getInstance();
@@ -42,6 +41,19 @@ public class DateUtil {
 		}else {
 			return "a long time ago..";
 		}
+	}
+	
+	public static long getDateDifferenceMs(Date thenDate){
+		Calendar now = Calendar.getInstance();
+        Calendar then = Calendar.getInstance();
+        now.setTime(new Date());
+        then.setTime(thenDate);
+		
+        long nowMs = now.getTimeInMillis();
+        long thenMs = then.getTimeInMillis();
+        
+        long diff = nowMs - thenMs;
+        return diff;
 	}
 	
 }
