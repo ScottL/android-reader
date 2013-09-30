@@ -18,6 +18,8 @@ import android.widget.ListView;
 
 import com.example.database.ArticleDbAdaptor;
 import com.example.myreader.data.Article;
+import com.example.myreader.data.Category;
+import com.example.myreader.data.Publisher;
 import com.example.myreader.util.CategoryAdaptor;
 import com.example.myreader.util.EfficientAdapter;
 import com.example.myreader.util.RssService;
@@ -32,7 +34,7 @@ public class Menu extends ListActivity {
 	public final static String DESCRIPTION = "com.example.MyReader.ARTICLE_DESCRIPTION";
 	public final static String ARTICLE_OBJECT = "com.example.MyReader.ARTICLE_OBJECT";
 
-	private String[] categoryList = CategoryListActivity.CATEGORY_LIST;
+	private String[] categoryList = Category.CategoryList;
 	private List<Article> articles = new ArrayList<Article>();
 	public ProgressDialog ShowProgress;
 	private String categoryName;
@@ -63,13 +65,6 @@ public class Menu extends ListActivity {
 		setupActionBar();
 		setupRSSService();
     
-		
-		/*	http://news.yahoo.com/rss/us
-		 *	http://news.yahoo.com/rss/
-		 *	http://rss.nytimes.com/services/xml/rss/nyt/US.xml
-		 *	http://feeds.feedburner.com/TechCrunch
-		 *
-		 */
 	}
 	
 	private void onCategoryChange(String category){
@@ -80,34 +75,34 @@ public class Menu extends ListActivity {
 
 	private void setupRSSService(){
 		RssService service = new RssService(this);
-		if(categoryName.equals("Top Stories")){
-			String[] feeds = {"http://news.yahoo.com/rss/us", "http://feeds.feedburner.com/TechCrunch"};
+		if(categoryName.equals(Category.TopStories)){
+			String[] feeds = {Publisher.YahooL, Publisher.TechCrunchL};
 			service.execute(feeds);
-		}else if(categoryName.equals("Technology")){
-			if(publisherName.equals("TechCrunch")){
-				String[] feeds = {"http://feeds.feedburner.com/TechCrunch"};
+		}else if(categoryName.equals(Category.Technology)){
+			if(publisherName.equals(Publisher.TechCrunch)){
+				String[] feeds = {Publisher.TechCrunchL};
 				service.execute(feeds);
-			}else if(publisherName.equals("Engadget")){
-				String[] feeds = {"http://www.engadget.com/rss.xml"};
+			}else if(publisherName.equals(Publisher.Engadget)){
+				String[] feeds = {Publisher.EngadgetL};
 				service.execute(feeds);
-			}else if(publisherName.equals("CNET")){
-				String[] feeds = {"http://feeds.feedburner.com/cnet/NnTv"};
+			}else if(publisherName.equals(Publisher.CNET)){
+				String[] feeds = {Publisher.CNETL};
 				service.execute(feeds);
 			}
-		}else if(categoryName.equals("U.S. News")){
-			if(publisherName.equals("Yahoo")){
-				String[] feeds = {"http://news.yahoo.com/rss/us"};
+		}else if(categoryName.equals(Category.USNews)){
+			if(publisherName.equals(Publisher.Yahoo)){
+				String[] feeds = {Publisher.YahooL};
 				service.execute(feeds);
-			}else if(publisherName.equals("CNN")){
-				String[] feeds = {"http://rss.cnn.com/rss/cnn_us.rss"};
+			}else if(publisherName.equals(Publisher.CNN)){
+				String[] feeds = {Publisher.CNNL};
 				service.execute(feeds);
 			}	
-		}else if(categoryName.equals("World News")){
-			if(publisherName.equals("Google")){
-				String[] feeds = {"http://news.google.com/news?pz=1&cf=all&ned=us&hl=en&output=rss"};
+		}else if(categoryName.equals(Category.WorldNews)){
+			if(publisherName.equals(Publisher.Google)){
+				String[] feeds = {Publisher.GoogleL};
 				service.execute(feeds);
-			}else if(publisherName.equals("New York Times")){
-				String[] feeds = {"http://rss.nytimes.com/services/xml/rss/nyt/World.xml"};
+			}else if(publisherName.equals(Publisher.NYT)){
+				String[] feeds = {Publisher.NYT};
 				service.execute(feeds);
 			}
 		}
