@@ -50,6 +50,7 @@ public class CategoryListActivity extends ExpandableListActivity{
 	
 	
 	private void prepareListData() {
+		
 		mGroupName = new ArrayList<String>();
 		mChildData = new HashMap<String, List<String>>();
  

@@ -134,7 +134,6 @@ public class Menu extends ListActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				Log.i("Menu", "Long Click");
 				return true;
 			}   
 		});	
@@ -156,7 +155,6 @@ public class Menu extends ListActivity {
 		Intent intent = new Intent(this, DetailActivity.class);
 		intent.putExtra(ARTICLE_OBJECT, currArticle);
 		startActivity(intent);    
-		
 	}
 	
 	

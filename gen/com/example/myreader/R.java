@@ -58,6 +58,8 @@ public final class R {
         public static final int Entertainment=0x7f050009;
         public static final int Sports=0x7f050008;
         public static final int Technology=0x7f050004;
+        /**  Categories 
+         */
         public static final int TopStories=0x7f050003;
         public static final int USNews=0x7f050005;
         public static final int WorldNews=0x7f050006;
