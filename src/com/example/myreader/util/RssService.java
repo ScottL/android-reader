@@ -45,7 +45,7 @@ public class RssService extends AsyncTask<String, Void, List<Article>>{
 		            Article fetchedArticle = dba.getBlogListing(a.getGuid());
 		            dba.close();
 					if (fetchedArticle == null){
-						Log.e("DB", "Found entry for first time: " + a.getTitle() + ", " + a.getPubDate());
+						//Log.e("DB", "Found entry for first time: " + a.getTitle() + ", " + a.getPubDate());
 						dba = new ArticleDbAdaptor(menu.getApplicationContext());
 			            dba.openToWrite();
 			            dba.insertBlogListing(a.getGuid());
