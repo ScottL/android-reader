@@ -75,5 +75,10 @@ public class ArticleDbAdaptor {
         args.put(KEY_READ, true);
         return sqLiteDatabase.update(TABLE_NAME, args, KEY_GUID + "='" + guid+"'", null) > 0;
     }
-
+    
+    public boolean markAsUnread(String guid) {
+        ContentValues args = new ContentValues();
+        args.put(KEY_READ, false);
+        return sqLiteDatabase.update(TABLE_NAME, args, KEY_GUID + "='" + guid+"'", null) > 0;
+    }
 }

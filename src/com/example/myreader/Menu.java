@@ -12,8 +12,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -36,6 +39,9 @@ public class Menu extends ListActivity {
 	public final static String DATE = "com.example.MyReader.ARTICLE_DATE";
 	public final static String DESCRIPTION = "com.example.MyReader.ARTICLE_DESCRIPTION";
 	public final static String ARTICLE_OBJECT = "com.example.MyReader.ARTICLE_OBJECT";
+	public final static int CONTEXT_MARKREAD = 1;
+	public final static int CONTEXT_MARKUNREAD = 2;
+	public final static int CONTEXT_MARKHIDDEN = 3;
 
 	List<String> mGroupName;
     HashMap<String, List<String>> mChildData;
@@ -55,6 +61,7 @@ public class Menu extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_article_list);
 		mThisListView = this.getListView();
+		registerForContextMenu(mThisListView);
 		
 		Intent intent = getIntent();
 		mCategoryName = intent.getStringExtra(CategoryListActivity.CATEGORY_NAME);
@@ -142,7 +149,7 @@ public class Menu extends ListActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				return true;
+				return false;
 			}   
 		});	
 	}
@@ -165,6 +172,58 @@ public class Menu extends ListActivity {
 		startActivity(intent);    
 	}
 	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+		Article article = (Article) getListAdapter().getItem(info.position);
+		
+		menu.setHeaderTitle("Article");
+		if(article.getRead()){
+			menu.add(0, CONTEXT_MARKUNREAD, 0, "Mark as unread");
+		}else{
+			menu.add(0, CONTEXT_MARKREAD, 0, "Mark as read");
+		}
+        menu.add(0, CONTEXT_MARKHIDDEN, 0, "Mark as hidden");
+	}
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info;
+	    try {
+	        info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+	    } catch (ClassCastException e) {
+	        return false;
+	    }
+	    
+	    Article article;
+	    switch (item.getItemId()) {	        
+	    	case CONTEXT_MARKREAD:
+	    		article = (Article) getListAdapter().getItem(info.position);
+	            mArticleDb.openToWrite();
+	    		mArticleDb.markAsRead(article.getGuid());
+	    		mArticleDb.close();
+	    		article.setRead(true);
+		    	mArticleListAdaptor.notifyDataSetChanged();
+	            return true;
+	    	case CONTEXT_MARKUNREAD:
+	    		article = (Article) getListAdapter().getItem(info.position);
+	            mArticleDb.openToWrite();
+	    		mArticleDb.markAsUnread(article.getGuid());
+	    		mArticleDb.close();
+	    		article.setRead(false); 
+		    	mArticleListAdaptor.notifyDataSetChanged();
+	            return true;
+	        case CONTEXT_MARKHIDDEN:
+	        	article = (Article) getListAdapter().getItem(info.position);
+	            Log.e("Menu", article.getTitle());
+	            return true;
+	        default:
+	        	return false;
+	    }	    
+	}
+	
+	
 	
 	/** Set up the Action Bar.
 	 * Icon for up navigation is enabled.
@@ -186,6 +245,7 @@ public class Menu extends ListActivity {
 	    	mArticleListAdaptor.notifyDataSetChanged();
 	    }
 	}
+	
 	
 	
 	/*
