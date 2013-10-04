@@ -14,6 +14,7 @@ public class ArticleDbAdaptor {
     public static final String KEY_ROWID = BaseColumns._ID;
     public static final String KEY_GUID = "guid";
 	public static final String KEY_READ = "read";
+	public static final String KEY_HIDDEN = "hidden";
 	
 	private MySQLiteHelper sqLiteHelper;
 	private SQLiteDatabase sqLiteDatabase;
@@ -43,6 +44,7 @@ public class ArticleDbAdaptor {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_GUID, guid);
         initialValues.put(KEY_READ, false);
+        initialValues.put(KEY_HIDDEN, false);
         return sqLiteDatabase.insert(TABLE_NAME, null, initialValues);
     }
     
@@ -52,6 +54,7 @@ public class ArticleDbAdaptor {
                 		KEY_ROWID,
                 		KEY_GUID, 
                 		KEY_READ,
+                		KEY_HIDDEN,
                 		}, 
                 		KEY_GUID + "= '" + guid + "'", 
                 		null,
@@ -64,6 +67,7 @@ public class ArticleDbAdaptor {
         	Article a = new Article();
    			a.setGuid(mCursor.getString(mCursor.getColumnIndex(KEY_GUID)));
    			a.setRead(mCursor.getInt(mCursor.getColumnIndex(KEY_READ)) > 0);
+   			a.setHidden(mCursor.getInt(mCursor.getColumnIndex(KEY_HIDDEN)) > 0);
    			a.setDbId(mCursor.getLong(mCursor.getColumnIndex(KEY_ROWID)));
    			return a;
         }

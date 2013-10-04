@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -31,7 +30,6 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
-import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.view.MenuItem;

@@ -6,18 +6,19 @@ import android.os.Parcelable;
 
 public class Article implements Parcelable  {
 	
-	private String guid;
 	private String title;
 	private String description;
 	private String url;
 	private String encodedContent;
 	private String pubDate;
-	private boolean read;
+	
 	private long dbId;
+	private String guid;
+	private boolean read;
+	private boolean hidden;
 	
 	
 	public Article(){
-		
 	}
 	
 	public String getGuid() {
@@ -79,6 +80,14 @@ public class Article implements Parcelable  {
 		return data;
 	}
 	
+	public long getDbId() {
+		return dbId;
+	}
+
+	public void setDbId(long dbId) {
+		this.dbId = dbId;
+	}
+	
 	public void setRead(boolean bool){
 		this.read = bool;
 	}
@@ -87,14 +96,13 @@ public class Article implements Parcelable  {
 		return read;
 	}
 	
-	public long getDbId() {
-		return dbId;
+	public void setHidden(boolean bool){
+		this.hidden = bool;
 	}
-
-	public void setDbId(long dbId) {
-		this.dbId = dbId;
-	}
-
+	
+	public boolean getHidden(){
+		return hidden;
+	} 
 
 	
 	
@@ -102,14 +110,13 @@ public class Article implements Parcelable  {
 	
 	
 	public Article(Parcel in){
-		String[] data= new String[5];
-		 
-		in.readStringArray(data);
-		this.title= data[0];
-		this.description= data[1];
-		this.url= data[2];
-		this.encodedContent = data[3];
-		this.pubDate = data[4];
+		this.title = in.readString();
+		this.description = in.readString();
+		this.url = in.readString();
+		this.encodedContent = in.readString();
+		this.pubDate = in.readString();
+		this.read = in.readByte() == 1;
+		this.hidden = in.readByte() == 1;
 	}
 	
 	@Override
@@ -119,7 +126,13 @@ public class Article implements Parcelable  {
 
 	@Override
 	public void writeToParcel(Parcel dest, int arg1) {
-		dest.writeStringArray(new String[]{this.title,this.description,this.url,this.encodedContent,this.pubDate});
+		dest.writeString(this.title);
+		dest.writeString(this.description);
+		dest.writeString(this.url);
+		dest.writeString(this.encodedContent);
+		dest.writeString(this.pubDate);	
+		dest.writeByte((byte) (this.read ? 1 : 0)); 
+		dest.writeByte((byte) (this.hidden ? 1: 0));
 	}
 
 	public static final Parcelable.Creator<Article> CREATOR= new Parcelable.Creator<Article>() {
