@@ -85,4 +85,16 @@ public class ArticleDbAdaptor {
         args.put(KEY_READ, false);
         return sqLiteDatabase.update(TABLE_NAME, args, KEY_GUID + "='" + guid+"'", null) > 0;
     }
+    
+    public boolean markAsHidden(String guid) {
+        ContentValues args = new ContentValues();
+        args.put(KEY_HIDDEN, true);
+        return sqLiteDatabase.update(TABLE_NAME, args, KEY_GUID + "='" + guid+"'", null) > 0;
+    }
+    
+    public boolean markAsVisible(String guid) {
+        ContentValues args = new ContentValues();
+        args.put(KEY_HIDDEN, false);
+        return sqLiteDatabase.update(TABLE_NAME, args, KEY_GUID + "='" + guid+"'", null) > 0;
+    }
 }

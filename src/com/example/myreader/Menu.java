@@ -16,7 +16,6 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -42,7 +41,8 @@ public class Menu extends ListActivity {
 	public final static int CONTEXT_MARKREAD = 1;
 	public final static int CONTEXT_MARKUNREAD = 2;
 	public final static int CONTEXT_MARKHIDDEN = 3;
-
+	public final static int CONTEXT_MARKVISIBLE = 4;
+	
 	List<String> mGroupName;
     HashMap<String, List<String>> mChildData;
 	private List<Article> articles = new ArrayList<Article>();
@@ -166,7 +166,6 @@ public class Menu extends ListActivity {
 		mArticleDb.close();
 		currArticle.setRead(true);
 		
-		
 		Intent intent = new Intent(this, DetailActivity.class);
 		intent.putExtra(ARTICLE_OBJECT, currArticle);
 		startActivity(intent);    
@@ -184,7 +183,12 @@ public class Menu extends ListActivity {
 		}else{
 			menu.add(0, CONTEXT_MARKREAD, 0, "Mark as read");
 		}
-        menu.add(0, CONTEXT_MARKHIDDEN, 0, "Mark as hidden");
+		
+		if(article.getHidden()){
+			menu.add(0, CONTEXT_MARKVISIBLE, 0, "Mark as visible");
+		}else{
+			menu.add(0, CONTEXT_MARKHIDDEN, 0, "Mark as hidden");
+		}
 	}
 	
 	@Override
@@ -216,7 +220,19 @@ public class Menu extends ListActivity {
 	            return true;
 	        case CONTEXT_MARKHIDDEN:
 	        	article = (Article) getListAdapter().getItem(info.position);
-	            Log.e("Menu", article.getTitle());
+	        	mArticleDb.openToWrite();
+	    		mArticleDb.markAsHidden(article.getGuid());
+	    		mArticleDb.close();
+	    		article.setHidden(true); 
+	    		mArticleListAdaptor.notifyDataSetChanged();
+	            return true;
+	        case CONTEXT_MARKVISIBLE:
+	        	article = (Article) getListAdapter().getItem(info.position);
+	        	mArticleDb.openToWrite();
+	    		mArticleDb.markAsVisible(article.getGuid());
+	    		mArticleDb.close();
+	    		article.setHidden(false); 
+	    		mArticleListAdaptor.notifyDataSetChanged();
 	            return true;
 	        default:
 	        	return false;

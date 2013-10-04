@@ -54,6 +54,7 @@ public class RssService extends AsyncTask<String, Void, List<Article>>{
 						//Log.e("DB", "Entry already exists: " + fetchedArticle.getDbId());
 						a.setDbId(fetchedArticle.getDbId());
 						a.setRead(fetchedArticle.getRead());
+						a.setHidden(fetchedArticle.getHidden());
 					}
 				}
 		    	

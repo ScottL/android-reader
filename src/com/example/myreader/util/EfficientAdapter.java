@@ -45,13 +45,14 @@ public class EfficientAdapter extends ArrayAdapter<Article> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    View rowView = inflater.inflate(R.layout.article_row, parent, false);
-
-	    TextView titleText = (TextView) rowView.findViewById(R.id.article_title);
-	    titleText.setText(mArticles.get(position).getTitle());
+	    
 	    if((mArticles.get(position).getRead())){
 	    	rowView.setBackgroundColor(Color.parseColor("#A0000011"));
 	    }
 
+	    TextView titleText = (TextView) rowView.findViewById(R.id.article_title);
+	    titleText.setText(mArticles.get(position).getTitle());    
+   
 	    SimpleDateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss Z", Locale.ENGLISH);
  	   	Date date;
 		try {
@@ -60,6 +61,10 @@ public class EfficientAdapter extends ArrayAdapter<Article> {
 		 	dateText.setText(DateUtil.getDateDifference(date));
 		} catch (ParseException e) {
 			e.printStackTrace();
+		}
+				
+		if(mArticles.get(position).getHidden()){
+			titleText.setText("---HIDDEN---");
 		}
 	    
 		return rowView;
