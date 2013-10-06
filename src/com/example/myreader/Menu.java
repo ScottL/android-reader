@@ -201,7 +201,13 @@ public class Menu extends ListActivity {
 	    }
 	    
 	    Article article;
-	    switch (item.getItemId()) {	        
+	    switch (item.getItemId()) {	  
+		    case android.R.id.home:
+		    	  Intent intent = new Intent(this, CategoryListActivity.class);
+		    	  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		    	  startActivity(intent);
+		    	  finish();
+		         return true;
 	    	case CONTEXT_MARKREAD:
 	    		article = (Article) getListAdapter().getItem(info.position);
 	            mArticleDb.openToWrite();
@@ -281,7 +287,7 @@ public class Menu extends ListActivity {
 		public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 			String clickedCategory = mGroupName.get(groupPosition);
 			String clickedPublisher =  mChildData.get(mGroupName.get(groupPosition)).get(childPosition);
-			if(!clickedCategory.equals(mCategoryName)){
+			if(!clickedPublisher.equals(mPublisherName)){
 	    		onCategoryChange(clickedCategory, clickedPublisher);
 	    	}
 			mDrawerLayout.closeDrawer(mDrawerList);
