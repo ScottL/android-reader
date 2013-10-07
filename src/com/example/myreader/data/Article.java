@@ -11,6 +11,7 @@ public class Article implements Parcelable  {
 	private String url;
 	private String encodedContent;
 	private String pubDate;
+	private String publisher;
 	
 	private long dbId;
 	private String guid;
@@ -69,6 +70,14 @@ public class Article implements Parcelable  {
 		return pubDate;
 	}
 	
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+	
 	private String extractCData(String data){
 		data = data.replaceAll("<!\\[CDATA\\[", "");
 		data = data.replaceAll("\\]\\]>", "");
@@ -115,6 +124,7 @@ public class Article implements Parcelable  {
 		this.url = in.readString();
 		this.encodedContent = in.readString();
 		this.pubDate = in.readString();
+		this.publisher = in.readString();
 		this.read = in.readByte() == 1;
 		this.hidden = in.readByte() == 1;
 	}
@@ -131,6 +141,7 @@ public class Article implements Parcelable  {
 		dest.writeString(this.url);
 		dest.writeString(this.encodedContent);
 		dest.writeString(this.pubDate);	
+		dest.writeString(this.publisher);
 		dest.writeByte((byte) (this.read ? 1 : 0)); 
 		dest.writeByte((byte) (this.hidden ? 1: 0));
 	}

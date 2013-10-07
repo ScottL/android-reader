@@ -84,6 +84,7 @@ public class RssService extends AsyncTask<String, Void, List<Article>>{
 			for(int i = 0; i < urls.length; i++){
 				Log.e("RssService", "url:" + urls[i]);
 				url = new URL(urls[i]);
+				rh.setPublisher(url);
 				xr.parse(new InputSource(url.openStream()));
 			}
 			

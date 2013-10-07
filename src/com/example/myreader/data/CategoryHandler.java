@@ -27,6 +27,8 @@ public class CategoryHandler {
         	mGroupName.add(Category.CategoryList[i]);
         }
 	 
+        List<String> TopStories = new ArrayList<String>();
+        TopStories.add(Publisher.TEMP);
 
         List<String> Technology = new ArrayList<String>();
         Technology.add(Publisher.TechCrunch);
@@ -43,7 +45,7 @@ public class CategoryHandler {
         
         List<String> Empty = new ArrayList<String>(0);
  
-        mChildData.put(mGroupName.get(mGroupName.indexOf(Category.TopStories)), Empty);
+        mChildData.put(mGroupName.get(mGroupName.indexOf(Category.TopStories)), TopStories);
         mChildData.put(mGroupName.get(mGroupName.indexOf(Category.Technology)), Technology);
         mChildData.put(mGroupName.get(mGroupName.indexOf(Category.USNews)), USNews);
         mChildData.put(mGroupName.get(mGroupName.indexOf(Category.WorldNews)), WorldNews);

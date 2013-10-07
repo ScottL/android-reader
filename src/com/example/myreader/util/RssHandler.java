@@ -1,13 +1,16 @@
 package com.example.myreader.util;
 
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
 import com.example.myreader.data.Article;
+import com.example.myreader.data.Publisher;
 
 
 public class RssHandler extends DefaultHandler {
@@ -15,6 +18,7 @@ public class RssHandler extends DefaultHandler {
 	// Feed and Article objects to use for temporary storage
 	private Article currentArticle = new Article();
 	private List<Article> articleList = new ArrayList<Article>();
+	private String publisherName;
 
 	// Number of articles added so far
 	private int articlesAdded = 0;
@@ -29,8 +33,11 @@ public class RssHandler extends DefaultHandler {
 	public List<Article> getArticleList() {
 		return articleList;
 	}
-
-
+	
+	public void setPublisher(URL publisher){
+		publisherName = Publisher.URLtoName(publisher.toString());
+	}
+	
 
 	/* 
 	 * This method is called everytime a start element is found (an opening XML marker)
@@ -74,7 +81,7 @@ public class RssHandler extends DefaultHandler {
 		} else if (localName.equalsIgnoreCase("guid")){
 			currentArticle.setGuid(chars.toString());
 		} else if (localName.equalsIgnoreCase("item")){
-			
+			currentArticle.setPublisher(publisherName);
 		} 
 
 

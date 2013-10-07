@@ -31,16 +31,17 @@ public final class R {
     }
     public static final class id {
         public static final int ScrollView=0x7f080002;
-        public static final int action_settings=0x7f08000a;
+        public static final int action_settings=0x7f08000b;
         public static final int article_date=0x7f080005;
         public static final int article_description=0x7f080006;
         public static final int article_detail_layout=0x7f080003;
+        public static final int article_publisher=0x7f080007;
         public static final int article_title=0x7f080004;
-        public static final int category_name=0x7f080007;
+        public static final int category_name=0x7f080008;
         public static final int drawer_layout=0x7f080000;
         public static final int left_drawer=0x7f080001;
-        public static final int subcategory_name=0x7f080008;
-        public static final int webview1=0x7f080009;
+        public static final int subcategory_name=0x7f080009;
+        public static final int webview1=0x7f08000a;
     }
     public static final class layout {
         public static final int activity_article_list=0x7f030000;
